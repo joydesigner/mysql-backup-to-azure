@@ -1,9 +1,9 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: mysql-backup-to-azure
+  name: sql-backup-to-azure
   labels:
-    app: mysql-backup
+    app: sql-backup
 spec:
   schedule: '0 0 * * *'
   successfulJobsHistoryLimit: 1
@@ -13,23 +13,23 @@ spec:
       template:
         spec:
           containers:
-            - name: mysql-backup-azure
-              image: adamhancock/mysql-backup-to-azure
+            - name: sql-backup-azure
+              image:  producthouseacr.azurecr.io/cwc/auto-mysql-bak:latest
               env:
-                - name: mysql_host
+                - name: sql_host
                   valueFrom:
                     secretKeyRef:
-                      name: mysql-backup
+                      name: postgresql
                       key: host
-                - name: mysql_user
+                - name: sql_user
                   valueFrom:
                     secretKeyRef:
-                      name: mysql-backup
+                      name: postgresql
                       key: user
-                - name: mysql_password
+                - name: sql_password
                   valueFrom:
                     secretKeyRef:
-                      name: mysql-backup
+                      name: postgresql
                       key: password
                 - name: azure_account
                   valueFrom:
