@@ -1,7 +1,8 @@
 module.exports = async function () {
-  const { Pool, Client } = require("@mysql.js/mysql");
+  const { Pool, Client } = require("pg");
 
-  const client = new Client({ ...require("./config/config.js").mysql });
+  const client = new Client({ ...require("./config/config.js").postgres });
+  await client.connect();
   const { results, fields } = await client.query("show databases");
   await client.end();
 

@@ -1,5 +1,5 @@
 const { config } = require("dotenv");
-const sqldump = require("pg");
+const pg = require("pg");
 // module.exports = async function (database) {
 //   try {
 //     return await sqldump({
